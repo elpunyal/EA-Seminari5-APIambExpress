@@ -34,6 +34,35 @@ export const deleteBook = (bookId: string) => {
     return Book.findByIdAndDelete(bookId);
 };
 
+// Funció que afegeix un tag al llibre
+// Si el tag ja existia, $addToSet no el duplica (es queda igual)
+export const addTag = (bookId: string, tag: string) => {
+    return Book.findByIdAndUpdate(
+        bookId,
+        { $addToSet: { tags: tag } }, // $addToSet afegeix el tag només si no hi és
+        { new: true } // retornem el llibre ja actualitzat
+    ).populate('authors');
+};
+
+// Funció que reemplaça tots els tags del llibre per una llista nova
+export const replaceTags = (bookId: string, tags: string[]) => {
+    return Book.findByIdAndUpdate(
+        bookId,
+        { $set: { tags } }, // $set substitueix el camp tags sencer
+        { new: true }
+    ).populate('authors');
+};
+
+// Funció que elimina un tag concret del llibre
+// Si el tag no existia, $pull no fa res (no dona error)
+export const removeTag = (bookId: string, tag: string) => {
+    return Book.findByIdAndUpdate(
+        bookId,
+        { $pull: { tags: tag } }, // $pull treu el tag de l'array
+        { new: true }
+    ).populate('authors');
+};
+
 // Exportamos todas las funciones para poder utilizarlas desde el controlador
 export default {
     createBook,
@@ -44,5 +73,11 @@ export default {
 
     updateBook,
 
-    deleteBook
+    deleteBook,
+
+    addTag,
+
+    replaceTags,
+
+    removeTag
 };

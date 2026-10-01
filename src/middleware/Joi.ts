@@ -164,6 +164,22 @@ export const Schemas = {
 
             // El precio no puede ser negativo
             price: Joi.number().min(0)
+        }),
+
+        // Esquema per afegir un sol tag (POST /books/:bookId/tags)
+        // Accepta { tag: "fantasia" } i comprova que el valor sigui de la llista
+        addTag: Joi.object({
+            tag: Joi.string()
+                .valid(...BOOK_TAGS) // només s'accepten tags de la llista
+                .required()
+        }),
+
+        // Esquema per reemplaçar tots els tags (PUT /books/:bookId/tags)
+        // Accepta { tags: ["novela", "historia"] } i comprova cada valor
+        replaceTags: Joi.object({
+            tags: Joi.array()
+                .items(Joi.string().valid(...BOOK_TAGS)) // cada element ha de ser valid
+                .required()
         })
     }
 };

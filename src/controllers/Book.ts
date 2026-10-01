@@ -101,5 +101,67 @@ const deleteBook = async (req: Request<{ bookId: string }>, res: Response, next:
     }
 };
 
+// Funció per afegir un tag al llibre
+// El tag arriba al body com { tag: "fantasia" }
+const addTag = async (req: Request<{ bookId: string }>, res: Response, next: NextFunction) => {
+    const bookId = req.params.bookId;
+    const { tag } = req.body; // agafem el tag del body
+
+    try {
+        // Demanem al servei que afegeixi el tag
+        const book = await BookService.addTag(bookId, tag);
+
+        if (book) {
+            // Retornem el llibre actualitzat amb els autors
+            res.status(200).json({ book });
+        } else {
+            // El llibre no existia
+            res.status(404).json({ message: 'not found' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Funció per reemplaçar tots els tags del llibre
+// Els nous tags arriben al body com { tags: ["novela", "historia"] }
+const replaceTags = async (req: Request<{ bookId: string }>, res: Response, next: NextFunction) => {
+    const bookId = req.params.bookId;
+    const { tags } = req.body; // agafem la llista nova de tags
+
+    try {
+        // Demanem al servei que canviï tots els tags
+        const book = await BookService.replaceTags(bookId, tags);
+
+        if (book) {
+            res.status(200).json({ book });
+        } else {
+            res.status(404).json({ message: 'not found' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Funció per eliminar un tag concret del llibre
+// El tag arriba com a paràmetre de la URL: /books/:bookId/tags/:tag
+const removeTag = async (req: Request<{ bookId: string; tag: string }>, res: Response, next: NextFunction) => {
+    const bookId = req.params.bookId;
+    const { tag } = req.params; // el tag ve de la URL, no del body
+
+    try {
+        // Demanem al servei que elimini el tag
+        const book = await BookService.removeTag(bookId, tag);
+
+        if (book) {
+            res.status(200).json({ book });
+        } else {
+            res.status(404).json({ message: 'not found' });
+        }
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Exportamos todas las funciones para poder utilizarlas en las rutas
-export default { createBook, readBook, readAll, updateBook, deleteBook };
+export default { createBook, readBook, readAll, updateBook, deleteBook, addTag, replaceTags, removeTag };
