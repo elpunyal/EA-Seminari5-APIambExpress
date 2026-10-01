@@ -1,5 +1,9 @@
 # Seminari 5: API REST con Node.js, Express, TypeScript y MongoDB
 
+
+Video explicatiu: https://drive.google.com/file/d/1rK-joFyRTzk05bjEFyNpIhIWa28DZ-Ce/view?usp=drive_link
+
+
 API REST de ejemplo con dos recursos, **autores** y **libros**, organizada en capas
 (rutas, middleware, controllers, services y models). Es la base sobre la que el equipo
 trabaja los objetivos del Seminario 5 de EA:
