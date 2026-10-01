@@ -8,15 +8,7 @@ i quins prompts d'IA s'han fet servir per fer-ho.
 ## Eina i model d'IA utilitzat
 
 - **Eina:** Google Gemini
-- **Model:** Gemini 2.0 Flash
-
----
-
-## Referències consultades
-
-- Documentació oficial de Mongoose: https://mongoosejs.com/docs/api/query.html
-- Documentació oficial de Joi: https://joi.dev/api
-- Documentació oficial d'Express: https://expressjs.com/en/4x/api.html
+- **Model:** Gemini 3.6 Flash
 
 ---
 
